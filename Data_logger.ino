@@ -3,7 +3,6 @@
 #include <MFRC522.h>
 // Servo library
 #include <Servo.h>
-// #include <Adafruit_Sensor.h>
 // DHT/Temp & humidity libraries
 #include <DHT.h>
 #include <DHT_U.h>
@@ -100,7 +99,6 @@ void loop() {
   }
   // 3. Delete the saved card if it is scanned
   else if (isSwitchOn[2] && !(isSwitchOn[0] || isSwitchOn[1] || isSwitchOn[3])) {
-    Serial.println("switch 3");
     deleteCard();
 
   }
@@ -125,7 +123,7 @@ void loop() {
   }
 }
 
-void deleteCard(){
+void deleteCard() {
   String cardUID = getCardUID();
 
   if (cardUID != "") {
@@ -238,14 +236,6 @@ void checkSensorSetup() {
   }
 
   if (confirmPressed) {
-    // Blink LED 3
-    static unsigned long blinkTimer = 0;
-    static bool ledState = false;
-    if (millis() - blinkTimer >= 500) {
-      blinkTimer = millis();
-      ledState = !ledState;
-      digitalWrite(ledPins[3], ledState);
-    }
 
     // Call getCardUID
     String cardUID = getCardUID();

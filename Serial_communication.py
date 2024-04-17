@@ -112,9 +112,23 @@ class SerialCommunicator(tk.Tk):
             card = self.c.fetchone()
 
             if card:
-                pressure = int(parts[2].split(":")[1])
-                temperature = int(parts[3].split(":")[1])
-                humidity = int(parts[4].split(":")[1])
+                try:
+                    pressure = float(parts[2].split(":")[1])
+                except ValueError:
+                    # Handle NULL or invalid pressure value
+                    pressure = None  # or pressure = 0
+
+                try:
+                    temperature = float(parts[3].split(":")[1])
+                except ValueError:
+                    # Handle NULL or invalid temperature value
+                    temperature = None  # or temperature = 0
+
+                try:
+                    humidity = float(parts[4].split(":")[1])
+                except ValueError:
+                    # Handle NULL or invalid humidity value
+                    humidity = None  # or humidity = 0
 
                 # Insert into data table
                 query = "INSERT INTO data (card_id, pressure, temperature, humidity) VALUES (%s, %s, %s, %s)"
